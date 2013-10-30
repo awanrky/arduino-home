@@ -1,22 +1,22 @@
 {
   "name": "arduino-home",
-  "description": "Built with theStack!",
+  "description": "website interface for home arduino station ",
   "version": "0.0.1",
-  "homepage": "https://github.com/mark.ott@live.com/arduino-home",
+  "homepage": "https://github.com/awanrky/arduino-home",
   "author": {
     "name": "Mark Ott",
-    "url": "https://github.com/mark.ott@live.com"
+    "url": "https://github.com/awanrky"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:mark.ott@live.com/arduino-home.git"
   },
-  "homepage": "https://mark.ott@live.com.github.io/arduino-home",
+  "homepage": "https://arduino-home.doesntexist.com",
   "keywords": [
     "generator-thestack"
   ],
   "bugs": {
-    "url": "https://github.com/mark.ott@live.com/arduino-home/issues"
+    "url": "https://github.com/awanrky/arduino-home/issues"
   },
   "main": "./server/server",
   "dependencies": {
