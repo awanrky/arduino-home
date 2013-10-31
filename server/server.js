@@ -4,7 +4,8 @@
 var Config =  global.Config = require('./config/config.js').config;
     express = require("express"),
     http =    require("http"),
-    port =    ( process.env.PORT || Config.listenPort ),
+    port =    ( process.env.ARDUINO_HOME_PORT || Config.listenPort ),
+    serverIP = ( process.env.ARDUINO_HOME_IP || Config.listenIP ),
     server =  module.exports = express(),
     mongoose =     require('mongoose'),
     API =     require('./API');
