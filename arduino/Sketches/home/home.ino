@@ -55,23 +55,51 @@ class TMP36
     }
 };
 
+class Cd5PhotoCell
+{
+    public:
+    int pin;
+    int reading;
+
+    Cd5PhotoCell(int analogPin)
+    {
+        pin = analogPin;
+    }
+
+    void takeReading()
+    {
+        reading = analogRead(pin);
+    }
+
+    void toSerial()
+    {
+        Serial.print("Cd5 Photo Cell--");
+        Serial.println(reading);
+    }
+};
+
 TMP36 * tmp36;
+Cd5PhotoCell * cd5PhotoCell;
 
 void setup()
 {
     Serial.begin(9600);
 
+    cd5PhotoCell = new Cd5PhotoCell(0);
     tmp36 = new TMP36(1, 5.0, 100);
 }
 
 void loop()
 {
-//    tmp36->setReading(analogRead(tmp36->pin));
-
     tmp36->takeReading();
     tmp36->toSerial();
-  
-    delay(1000);
+
+    cd5PhotoCell->takeReading();
+    cd5PhotoCell->toSerial();
+
+    Serial.println();
+
+    delay(5000);
 }
 
 
