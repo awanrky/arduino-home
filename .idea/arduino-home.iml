@@ -5,6 +5,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Node.js Dependencies for arduino-home" level="project" />
+    <orderEntry type="library" name="Modernizr-2.6.2" level="application" />
+    <orderEntry type="library" name="jQuery-2.0.0" level="application" />
+    <orderEntry type="library" name="sass-stdlib" level="application" />
   </component>
 </module>
 

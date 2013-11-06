@@ -11,7 +11,6 @@
     "type": "git",
     "url": "git@github.com:mark.ott@live.com/arduino-home.git"
   },
-  "homepage": "https://arduino-home.doesntexist.com",
   "keywords": [
     "generator-thestack"
   ],
