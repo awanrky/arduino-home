@@ -30,9 +30,9 @@ module.exports = schemaModel;
 // SCHEMA METHODS
 // ==============
 
-module.exports.schemaGet = function(req, res) {
-    schemaModel.find({'key': 1}, function(err, docs){
-        if (err) throw err;
-        res.send(docs);
+module.exports.getById = function(id, callback) {
+    schemaModel.findById(Schema.ObjectId(id), function(err, docs){
+        if (err) { callback(err); return; }
+        callback(undefined, docs);
     });
 };

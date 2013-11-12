@@ -7,7 +7,8 @@ var Config =  global.Config = require('./config/config.js').config;
     port =    ( process.env.ARDUINO_HOME_PORT || Config.listenPort ),
     server =  module.exports = express(),
     mongoose =     require('mongoose'),
-    API =     require('./API');
+    API =     require('./API'),
+    TMP36 = require('./routes/tmp36');
 
 // DATABASE CONFIGURATION
 // ======================
@@ -55,8 +56,9 @@ server.configure(function() {
 // ===
 
 API.api(server, schema);
+TMP36.tmp36(server);
+
 
 // Start Node.js Server
 http.createServer(server).listen(port);
 
-console.log('\n\nWelcome to Stacked!\n\nPlease go to http://localhost:' + port + ' to start using Require.js and Backbone.js\n\n');

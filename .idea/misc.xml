@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EventSoundsProjectComponent">
+    <option name="_breakpointSoundEnabled" value="true" />
+    <option name="_buildErrorSoundEnabled" value="true" />
+    <option name="_buildSuccessSoundEnabled" value="true" />
+    <option name="_buildWarningSoundEnabled" value="true" />
+    <option name="_exceptionSoundEnabled" value="true" />
+    <option name="_findFailedSoundEnabled" value="true" />
+    <option name="_findSuccessSoundEnabled" value="true" />
+    <option name="_processStoppedSoundEnabled" value="true" />
+    <option name="_breakpointSound" value="/com/lgc/eventsounds/sounds/breakpoint.wav" />
+    <option name="_buildErrorSound" value="/com/lgc/eventsounds/sounds/buildError.wav" />
+    <option name="_buildSuccessSound" value="/com/lgc/eventsounds/sounds/buildSuccess.wav" />
+    <option name="_buildWarningSound" value="/com/lgc/eventsounds/sounds/buildWarning.wav" />
+    <option name="_exceptionSound" value="/com/lgc/eventsounds/sounds/exception.wav" />
+    <option name="_findFailedSound" value="/com/lgc/eventsounds/sounds/findFailed.wav" />
+    <option name="_findSuccessSound" value="/com/lgc/eventsounds/sounds/findSuccess.wav" />
+    <option name="_processStoppedSound" value="/com/lgc/eventsounds/sounds/processStopped.wav" />
+  </component>
   <component name="IdProvider" IDEtalkID="47712B5A8D1A1496C735CEC3CA89976F" />
+  <component name="IvyProjectSettings">
+    <dependencies />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_3" assert-keyword="false" jdk-15="false" />
 </project>
 
