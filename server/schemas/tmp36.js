@@ -11,7 +11,8 @@ var mongoose =     require('mongoose'),
 var tmp36Schema = new Schema({
     volts: {type: Number, default: null},
     degreesCelcius: {type: Number, default: null},
-    date: {type: Date, default: null}
+    date: {type: Date, default: null},
+    sensorName: {type: String, default: null}
 });
 
 tmp36Schema.index({date: 1, type: -1});
@@ -31,7 +32,7 @@ module.exports = schemaModel;
 // ==============
 
 module.exports.getById = function(id, callback) {
-    schemaModel.findById(Schema.ObjectId(id), function(err, docs){
+    schemaModel.findById(id, function(err, docs){
         if (err) { callback(err); return; }
         callback(undefined, docs);
     });
