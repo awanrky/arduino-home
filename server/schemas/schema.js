@@ -1,12 +1,10 @@
 // DEPENDENCIES
 // ============
+'use strict';
 
 var mongoose =     require('mongoose'),
     Schema =     mongoose.Schema,
     objectID =     Schema.ObjectID;
-
-// USER ACCOUNT SCHEMA
-// ===================
 
 var schema = new Schema({
   key: {type: String, default: null}

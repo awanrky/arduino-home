@@ -1,11 +1,12 @@
 /**
  * Created by mark on 11/11/13.
  */
+'use strict';
 
 var schema = require('../schemas/tmp36');
-var RouteInformation = require('./RouteInformation');
+var RouteInformation = require('./routeinformation');
 
-routeInformation = new RouteInformation('tmp36');
+var routeInformation = new RouteInformation('tmp36');
 
 
 module.exports.tmp36 = function(server) {

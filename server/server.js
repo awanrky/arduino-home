@@ -1,14 +1,22 @@
-// DEPENDENCIES
-// ============
+/* global global, process */
+'use strict';
 
-var Config =  global.Config = require('./config/config.js').config;
-    express = require("express"),
-    http =    require("http"),
+var express = require('express');
+
+var Config =  require('./config/config.js').config,
+    http =    require('http'),
     port =    ( process.env.ARDUINO_HOME_PORT || Config.listenPort ),
-    server =  module.exports = express(),
+    server =  express(),
     mongoose =     require('mongoose'),
     API =     require('./API'),
-    TMP36 = require('./routes/tmp36');
+    SerialPortRoute = require('./routes/serialport'),
+    TMP36 = require('./routes/tmp36'),
+    SerialPort = require('./serialport');
+
+//global.Config = Config;
+module.exports = server;
+
+var serialPort = new SerialPort(Config.arduino);
 
 // DATABASE CONFIGURATION
 // ======================
@@ -56,8 +64,10 @@ server.configure(function() {
 // ===
 
 API.api(server, schema);
+SerialPortRoute.serialport(server);
 TMP36.tmp36(server);
 
+serialPort.open();
 
 // Start Node.js Server
 http.createServer(server).listen(port);
