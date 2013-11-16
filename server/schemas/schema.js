@@ -1,13 +1,11 @@
 'use strict';
-// DEPENDENCIES
-// ============
 
 var mongoose =     require('mongoose'),
     Schema =     mongoose.Schema,
     objectID =     Schema.ObjectID;
 
 var schema = new Schema({
-  key: {type: String, default: null}
+    key: {type: String, default: null}
 });
 
 // CREATE DATABASE MODEL
@@ -20,8 +18,8 @@ module.exports = schemaModel;
 // ==============
 
 module.exports.schemaGet = function(req, res) {
-  schemaModel.find({'key': 1}, function(err, docs){
-    if (err) throw err;
-    res.send(docs);
-  });
+    schemaModel.find({'key': 1}, function(err, docs){
+        if (err) { throw err; }
+        res.send(docs);
+    });
 };

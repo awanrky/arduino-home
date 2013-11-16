@@ -21,6 +21,6 @@
     "browser": true,
     "node": true,
     "nomen": true,
-    "maxcomplexity": 1,
+    "maxcomplexity": 2,
     "maxlen": 100
 }

@@ -5,6 +5,8 @@
       <w>baudrate</w>
       <w>gruntfile</w>
       <w>jshint</w>
+      <w>mongo</w>
+      <w>nodejs</w>
       <w>nodemon</w>
       <w>requirejs</w>
       <w>serialport</w>

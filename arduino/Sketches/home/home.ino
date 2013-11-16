@@ -25,16 +25,25 @@ void setup()
 
 void loop()
 {
-    tmp36->takeReading();
-    tmp36->toSerial();
+    Serial.print("TMP36:");
+    Serial.print(tmp36->getVoltage());
+    Serial.print(",");
+    Serial.println(tmp36->getCelcius(false));
 
-    cd5PhotoCell->takeReading();
-    cd5PhotoCell->toSerial();
+    Serial.print("Cd5:");
+    Serial.println(cd5PhotoCell->getReading());
 
-    tsl2561->takeReading();
-    tsl2561->toSerial();
+    Serial.print("TSL2561:");
+    Serial.print(tsl2561->getLux());
+    Serial.print(",");
+    Serial.print(tsl2561->getBroadband());
+    Serial.print(",");
+    Serial.println(tsl2561->getInfrared(false));
 
-    dht->toSerial();
+    Serial.print("DHT:");
+    Serial.print(dht->getTemperature());
+    Serial.print(",");
+    Serial.println(dht->getHumidity());
 
     Serial.println();
 

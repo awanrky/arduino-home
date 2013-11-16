@@ -12,6 +12,10 @@ function SerialPort (config) {
     });
 }
 
+function onData(data) {
+
+}
+
 SerialPort.prototype = {
     version: '0.0.1',
 
@@ -27,6 +31,8 @@ SerialPort.prototype = {
                 ', Baudrate: ' +
                 that.config.baudrate);
         });
+
+        this.serialPort.on('data', onData);
     }
 };
 
