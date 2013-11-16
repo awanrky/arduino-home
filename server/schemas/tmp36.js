@@ -3,8 +3,7 @@
 'use strict';
 
 var mongoose =     require('mongoose'),
-    Schema =     mongoose.Schema,
-    objectID =     Schema.ObjectID;
+    Schema =     mongoose.Schema;
 
 // TMP36 SCHEMA
 // ===================

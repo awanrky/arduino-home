@@ -9,6 +9,8 @@
     <orderEntry type="library" name="jQuery-2.0.0" level="application" />
     <orderEntry type="library" name="sass-stdlib" level="application" />
     <orderEntry type="library" name="Node.js v0.10.21 Core Modules" level="application" />
+    <orderEntry type="library" name="jQuery UI-1.10.2" level="application" />
+    <orderEntry type="library" name="express" level="application" />
   </component>
 </module>
 

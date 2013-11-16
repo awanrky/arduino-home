@@ -1,7 +1,7 @@
+'use strict';
 /**
  * Created by mark on 11/14/13.
  */
-'use strict';
 
 var serialport = require('serialport');
 var RouteInformation = require('./routeinformation');
@@ -18,7 +18,6 @@ module.exports.serialport = function(server) {
                 return;
             }
 
-            JSON.stringify(ports);
             res.send(ports);
         });
     });

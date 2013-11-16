@@ -3,7 +3,13 @@
     <words>
       <w>arduino</w>
       <w>baudrate</w>
+      <w>gruntfile</w>
+      <w>jshint</w>
+      <w>nodemon</w>
+      <w>requirejs</w>
       <w>serialport</w>
+      <w>uglify</w>
+      <w>viewport</w>
     </words>
   </dictionary>
 </component>

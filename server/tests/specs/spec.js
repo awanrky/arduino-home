@@ -6,11 +6,13 @@ var request = require('superagent'),
 
 // BEFORE HOOK
 before(function(){
+    'use strict';
 	this.server = http.createServer(app).listen(3000);
 });
 
 // AFTER HOOK
 after(function(done){
+    'use strict';
 	this.server.close(done);
 });
 

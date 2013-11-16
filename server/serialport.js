@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var SP = require("serialport").SerialPort;
+var SP = require('serialport').SerialPort;
 
 function SerialPort (config) {
     this.config = config;
@@ -22,8 +22,11 @@ SerialPort.prototype = {
 
         this.serialPort.open(function () {
             that.isOpen = true;
-            console.log('Arduino SerialPort open.  Port: ' + that.config.serialport + ', Baudrate: ' + that.config.baudrate);
-        })
+            console.log('Arduino SerialPort open.  Port: ' +
+                that.config.serialport +
+                ', Baudrate: ' +
+                that.config.baudrate);
+        });
     }
 };
 
