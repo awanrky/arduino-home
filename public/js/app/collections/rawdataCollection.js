@@ -1,6 +1,6 @@
 // IndexCollection.js
 
-define(['jquery', 'backbone', 'models/IndexModel'],
+define(['jquery', 'backbone', 'models/rawdataModel'],
     function ($, Backbone, Model) {
         'use strict';
 

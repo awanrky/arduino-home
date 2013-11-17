@@ -1,8 +1,16 @@
 // Router.js
 
-define(["jquery", "backbone", "models/IndexModel", "views/IndexView", "views/dashboardView", "collections/IndexCollection"],
+define(['jquery',
+    'backbone',
+    'models/IndexModel',
+    'views/IndexView',
+    'views/dashboardView',
+    'views/rawdataView',
+    'collections/IndexCollection'
+],
 
-    function($, Backbone, Model, View, DashboardView, Collection) {
+    function ($, Backbone, Model, View, DashboardView, RawDataView, Collection) {
+        'use strict';
 
         // Returns the DesktopRouter class
         return Backbone.Router.extend({
@@ -18,8 +26,9 @@ define(["jquery", "backbone", "models/IndexModel", "views/IndexView", "views/das
             routes: {
 
                 // When there is no hash on the url, the home method is called
-                "": "getDashboard",
-                "dashboard": "getDashboard"
+                '': 'getDashboard',
+                'dashboard': 'getDashboard',
+                'rawdata': 'getRawData'
 
             },
 
@@ -32,6 +41,10 @@ define(["jquery", "backbone", "models/IndexModel", "views/IndexView", "views/das
 
             getDashboard: function () {
                 new DashboardView();
+            },
+
+            getRawData: function () {
+                new RawDataView();
             }
 
         });

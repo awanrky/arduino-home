@@ -1,16 +1,20 @@
-// IndexView.js
+define(['jquery',
+    'backbone',
+    'underscore',
+    'models/dashboardModel',
+    'text!templates/dashboard.html'],
 
-define(["jquery", "backbone", "models/dashboardModel", "text!templates/dashboard.html"],
+    function ($, Backbone, _, Model, template) {
+        'use strict';
 
-    function($, Backbone, Model, template){
-
-        var dashboardView = Backbone.View.extend({
+        // Returns the View class
+        return Backbone.View.extend({
 
             // The DOM Element associated with this view
-            el: ".magic",
+            el: '.magic',
 
             // View constructor
-            initialize: function() {
+            initialize: function () {
 
                 // Calls the view's render method
                 this.render();
@@ -23,7 +27,7 @@ define(["jquery", "backbone", "models/dashboardModel", "text!templates/dashboard
             },
 
             // Renders the view's template to the UI
-            render: function() {
+            render: function () {
 
                 // Setting the view's template property using the Underscore template method
                 this.template = _.template(template, {});
@@ -37,9 +41,6 @@ define(["jquery", "backbone", "models/dashboardModel", "text!templates/dashboard
             }
 
         });
-
-        // Returns the View class
-        return dashboardView;
 
     }
 

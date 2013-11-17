@@ -1,6 +1,8 @@
-// IndexView.js
-
-define(['jquery', 'backbone', 'underscore', 'models/IndexModel', 'text!templates/Index.html'],
+define(['jquery',
+    'backbone',
+    'underscore',
+    'models/rawdataModel',
+    'text!templates/rawdata.html'],
 
     function ($, Backbone, _, Model, template) {
         'use strict';

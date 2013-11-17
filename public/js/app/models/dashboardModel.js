@@ -1,16 +1,18 @@
 // IndexModel.js
 
-define(["jquery", "backbone"],
+define(['jquery', 'backbone'],
 
-    function($, Backbone) {
+    function ($, Backbone) {
+        'use strict';
 
         // Creates a new Backbone Model class object
-        var dashboardModel = Backbone.Model.extend({
+        // Returns the Model class
+        return Backbone.Model.extend({
 
             url: '',
 
             // Model Constructor
-            initialize: function() {
+            initialize: function () {
 
             },
 
@@ -20,14 +22,11 @@ define(["jquery", "backbone"],
             },
 
             // Gets called automatically by Backbone when the set and/or save methods are called (Add your own logic)
-            validate: function(attrs) {
+            validate: function (attrs) {
 
             }
 
         });
-
-        // Returns the Model class
-        return dashboardModel;
 
     }
 

@@ -3,12 +3,17 @@
     <words>
       <w>arduino</w>
       <w>baudrate</w>
+      <w>chainability</w>
+      <w>deps</w>
       <w>gruntfile</w>
+      <w>hashchange</w>
       <w>jshint</w>
       <w>lodash</w>
       <w>mongo</w>
+      <w>navbar</w>
       <w>nodejs</w>
       <w>nodemon</w>
+      <w>rawdata</w>
       <w>requirejs</w>
       <w>serialport</w>
       <w>uglify</w>
