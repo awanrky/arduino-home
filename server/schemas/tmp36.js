@@ -28,12 +28,4 @@ tmp36Schema.virtual('degreesFahrenheit').get(function() {
 var schemaModel = mongoose.model('tmp36SchemaModel', tmp36Schema);
 module.exports = schemaModel;
 
-// SCHEMA METHODS
-// ==============
 
-module.exports.getById = function(id, callback) {
-    schemaModel.findById(id, function(err, docs){
-        if (err) { callback(err); return; }
-        callback(undefined, docs);
-    });
-};
