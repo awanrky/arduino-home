@@ -7,6 +7,9 @@
 #include <aisa_TMP36.h>
 #include <aisa_DHT.h>
 
+const String dataSeparator = ",";
+const String dataTypeTerminator = ":";
+
 aisa_TMP36 * tmp36;
 aisa_Cd5PhotoCell * cd5PhotoCell;
 aisa_TSL2561 * tsl2561;
@@ -16,39 +19,108 @@ void setup()
 {
     Serial.begin(57600);
 
-    cd5PhotoCell = new aisa_Cd5PhotoCell(0);
-    tmp36 = new aisa_TMP36(1, 5.0, 100);
-    tsl2561 = new aisa_TSL2561();
+    cd5PhotoCell = new aisa_Cd5PhotoCell("cd5", 0);
+    tmp36 = new aisa_TMP36("tmp36", 1, 5.0, 100);
+    tsl2561 = new aisa_TSL2561("tsl2561");
 
-    dht = new aisa_DHT(5, DHT22);
+    dht = new aisa_DHT("dht", 5, DHT22);
+}
+
+void sendDataSeparator() 
+{
+    Serial.print(dataSeparator);
+}
+
+void sendDataType(String type) 
+{
+    Serial.print(type);
+    Serial.print(dataTypeTerminator);
+}
+
+void sendSensorName(String name) 
+{
+    sendData(name);
+}
+
+void sendSensorPinName(String name)
+{
+    sendData(name);
+}
+
+void sendData(String data)
+{
+    Serial.print(data);
+    sendDataSeparator();
+}
+
+void sendData(float data)
+{
+    Serial.print(data);
+    sendDataSeparator();
+}
+
+void sendData(int data) 
+{
+    Serial.print(data);
+    sendDataSeparator();
+}
+
+void sendDataEnd(int data) 
+{
+    Serial.println(data);
+}
+
+void sendTmp36Data() 
+{
+    sendDataType("TMP36");
+    sendSensorName(tmp36->getSensorName());
+    sendSensorPinName(tmp36->getPinName());
+    sendData(tmp36->getVoltage());
+    sendDataEnd(tmp36->getCelcius(false));
+}
+
+void sendTsl2561Data()
+{
+    sendDataType("TSL2561");
+    sendSensorName(tsl2561->getSensorName());
+    sendSensorPinName(tsl2561->getPinName());
+    sendData(tsl2561->getSensorId());
+    sendData(tsl2561->getLux());
+    sendData(tsl2561->getBroadband());
+    sendDataEnd(tsl2561->getInfrared(false));
+}
+
+void sendDhtData()
+{
+    sendDataType("DHT");
+    sendSensorName(dht->getSensorName());
+    sendSensorPinName(dht->getPinName());
+    sendData(dht->getTemperature());
+    sendDataEnd(dht->getHumidity());
+}
+
+void sendCd5PhotoCellData()
+{
+    sendDataType("Cd5");
+    sendSensorName(cd5PhotoCell->getSensorName());
+    sendSensorPinName(cd5PhotoCell->getPinName());
+    sendDataEnd(cd5PhotoCell->getReading());
 }
 
 void loop()
 {
-    Serial.print("TMP36:");
-    Serial.print(tmp36->getVoltage());
-    Serial.print(",");
-    Serial.println(tmp36->getCelcius(false));
+    sendTmp36Data();
 
-    Serial.print("Cd5:");
-    Serial.println(cd5PhotoCell->getReading());
+    sendCd5PhotoCellData();
 
-    Serial.print("TSL2561:");
-    Serial.print(tsl2561->getLux());
-    Serial.print(",");
-    Serial.print(tsl2561->getBroadband());
-    Serial.print(",");
-    Serial.println(tsl2561->getInfrared(false));
+    sendTsl2561Data();
 
-    Serial.print("DHT:");
-    Serial.print(dht->getTemperature());
-    Serial.print(",");
-    Serial.println(dht->getHumidity());
-
-    Serial.println();
+    sendDhtData();
 
     delay(5000);
 }
+
+
 
 
 
