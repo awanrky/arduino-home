@@ -5,17 +5,17 @@
 var mongoose =     require('mongoose'),
     Schema =     mongoose.Schema;
 
-// TMP36 SCHEMA
-// ===================
-
 var tmp36Schema = new Schema({
-    volts: {type: Number, default: null},
-    degreesCelcius: {type: Number, default: null},
-    date: {type: Date, default: null},
-    sensorName: {type: String, default: null}
+    sensorType: { type: String, default: 'invalid' },
+    sensorName: { type: String, default: 'invalid' },
+    sensorPin: { type: String, default: null },
+    datetime: { type: Date, default: null },
+    data: { type: String, default: null },
+    voltage: { type: Number, default: null },
+    degreesCelcius: { type: Number, default: null }
 });
 
-tmp36Schema.index({date: 1, type: -1});
+tmp36Schema.index({datetime: 1, type: -1});
 tmp36Schema.index({degreesCelcius: 1, type: -1});
 
 tmp36Schema.virtual('degreesFahrenheit').get(function() {

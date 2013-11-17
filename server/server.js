@@ -8,7 +8,7 @@ var Config = require('./config/config.js').config,
     mongoose = require('mongoose'),
     SerialPortRoute = require('./routes/serialport'),
     TMP36 = require('./routes/tmp36'),
-    SerialPort = require('./serialport');
+    SerialPort = require('./serialport/serialport');
 
 module.exports = server;
 

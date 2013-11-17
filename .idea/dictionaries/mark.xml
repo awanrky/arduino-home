@@ -5,6 +5,7 @@
       <w>baudrate</w>
       <w>gruntfile</w>
       <w>jshint</w>
+      <w>lodash</w>
       <w>mongo</w>
       <w>nodejs</w>
       <w>nodemon</w>

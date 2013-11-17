@@ -6,7 +6,7 @@
 var schema = require('../schemas/tmp36');
 var RouteInformation = require('./routeinformation');
 
-var routeInformation = new RouteInformation('tmp36');
+var routeInformation = new RouteInformation('invalid');
 
 
 module.exports.tmp36 = function(server) {
