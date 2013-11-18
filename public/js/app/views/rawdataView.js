@@ -2,9 +2,19 @@ define(['jquery',
     'backbone',
     'underscore',
     'models/rawdataModel',
-    'text!templates/rawdata.html'],
-
-    function ($, Backbone, _, Model, template) {
+    'text!templates/rawdata.html', './sensorDataCountView',
+    './rawData/tmp36View',
+    '../collections/rawData/tmp36Collection'
+],
+    function (
+        $,
+        Backbone,
+        _,
+        Model,
+        template,
+        SensorDataCountView,
+        Tmp36RawDataView,
+        Tmp36RawDataCollection) {
         'use strict';
 
         // Returns the View class
@@ -15,6 +25,14 @@ define(['jquery',
 
             // View constructor
             initialize: function () {
+                var that = this;
+
+                this.tmp36RawDataCollection = new Tmp36RawDataCollection();
+
+                this.tmp36RawDataCollection.on('add', function() {
+                    that.renderTmp36();
+                });
+                this.tmp36RawDataCollection.fetch();
 
                 // Calls the view's render method
                 this.render();
@@ -35,9 +53,22 @@ define(['jquery',
                 // Dynamically updates the UI with the view's template
                 this.$el.html(this.template);
 
+                this.sensorDataCountView = new SensorDataCountView();
+                this.$('.schema-count').append(this.sensorDataCountView.el);
+
                 // Maintains chainability
                 return this;
 
+            },
+
+            renderTmp36: function () {
+                this.tmp36RawDataCollection.each(function(item) {
+                    var tmp36RawDataView = new Tmp36RawDataView({
+                        model: item
+                    });
+                    tmp36RawDataView.render();
+                    $('#raw-data-tmp36').append(tmp36RawDataView.el);
+                });
             }
 
         });

@@ -1,8 +1,16 @@
 // IndexModel.js
 
-define(['jquery', 'backbone'],
-
-    function ($, Backbone) {
+define([
+    'jquery',
+    'backbone',
+    './sensorDataCountModel',
+    '../collections/rawData/tmp36Collection'
+],
+    function (
+        $,
+        Backbone,
+        SensorDataCountModel,
+        Tmp36RawDataCollection) {
         'use strict';
 
         // Creates a new Backbone Model class object
@@ -13,6 +21,8 @@ define(['jquery', 'backbone'],
 
             // Model Constructor
             initialize: function () {
+
+                this.tmp36RawDataCollection = new Tmp36RawDataCollection();
 
             },
 

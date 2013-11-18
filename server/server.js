@@ -7,6 +7,7 @@ var Config = require('./config/config.js').config,
     server = express(),
     mongoose = require('mongoose'),
     SerialPortRoute = require('./routes/serialport'),
+    SensorDataAll = require('./routes/sensordata/all'),
     TMP36 = require('./routes/tmp36'),
     SerialPort = require('./serialport/serialport');
 
@@ -65,6 +66,8 @@ server.configure(function() {
 
 SerialPortRoute.serialport(server);
 TMP36.tmp36(server);
+
+SensorDataAll.all(server);
 
 serialPort.open();
 

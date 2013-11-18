@@ -16,6 +16,7 @@
       <w>rawdata</w>
       <w>requirejs</w>
       <w>routeinformation</w>
+      <w>sensordata</w>
       <w>serialport</w>
       <w>uglify</w>
       <w>viewport</w>
