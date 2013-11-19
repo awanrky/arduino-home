@@ -1,7 +1,7 @@
 define([
     'jquery',
     'backbone',
-    'text!templates/rawData/tmp36.html'
+    'text!templates/rawData/dht.html'
 ],
     function($, Backbone, template){
         'use strict';

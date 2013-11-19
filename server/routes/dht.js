@@ -1,15 +1,15 @@
-/**
- * Created by mark on 11/11/13.
- */
 'use strict';
+/**
+ * Created by mark on 11/18/13.
+ */
 
-var schema = require('../schemas/tmp36');
+var schema = require('../schemas/dht');
 var RouteInformation = require('./routeinformation');
 
-var routeInformation = new RouteInformation('tmp36');
+var routeInformation = new RouteInformation('dht');
 
 
-module.exports.tmp36 = function(server) {
+module.exports.dht = function(server) {
 
     server.get(routeInformation.getPath('id/:id'), function(req, res){
         schema.findById(req.params.id, function(err, docs){
@@ -26,20 +26,20 @@ module.exports.tmp36 = function(server) {
     });
 
     server.post(routeInformation.getPath(), function(req, res) {
-        var tmp36 = new schema({
-            volts: req.body.volts,
+        var dht = new schema({
+            humidity: req.body.humidity,
             degreesCelcius: req.body.degreesCelcius,
             date: req.body.date || new Date(),
             sensorName: req.body.sensorName
         });
 
-        tmp36.save(function(error, newTmp36) {
+        dht.save(function(error, newDht) {
             if (error) {
                 res.send(500, { error: error.message });
                 return;
             }
 
-            res.send(newTmp36);
+            res.send(newDht);
         });
     });
 

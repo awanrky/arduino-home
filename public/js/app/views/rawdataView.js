@@ -4,9 +4,10 @@ define(['jquery',
     'models/rawdataModel',
     'text!templates/rawdata.html', './sensorDataCountView',
     './rawData/tmp36View',
-    '../collections/rawData/tmp36Collection'
-],
-    function (
+    '../collections/rawData/tmp36Collection',
+    './rawData/dhtView',
+    '../collections/rawData/dhtCollection'
+], function (
         $,
         Backbone,
         _,
@@ -14,60 +15,65 @@ define(['jquery',
         template,
         SensorDataCountView,
         Tmp36RawDataView,
-        Tmp36RawDataCollection) {
+        Tmp36RawDataCollection,
+        DhtRawDataView,
+        DhtRawDataCollection
+        ) {
         'use strict';
 
-        // Returns the View class
         return Backbone.View.extend({
 
-            // The DOM Element associated with this view
             el: '.magic',
 
-            // View constructor
             initialize: function () {
-                var that = this;
-
-                this.tmp36RawDataCollection = new Tmp36RawDataCollection();
-
-                this.tmp36RawDataCollection.on('add', function() {
-                    that.renderTmp36();
-                });
-                this.tmp36RawDataCollection.fetch();
-
-                // Calls the view's render method
                 this.render();
-
             },
 
-            // View Event Handlers
             events: {
 
             },
 
-            // Renders the view's template to the UI
             render: function () {
 
-                // Setting the view's template property using the Underscore template method
                 this.template = _.template(template, {});
 
-                // Dynamically updates the UI with the view's template
                 this.$el.html(this.template);
 
                 this.sensorDataCountView = new SensorDataCountView();
                 this.$('.schema-count').append(this.sensorDataCountView.el);
 
-                // Maintains chainability
+                this.initializeRawDataCollection({
+                    collection: new Tmp36RawDataCollection(),
+                    View: Tmp36RawDataView,
+                    $element: $('#raw-data-tmp36')
+                });
+
+                this.initializeRawDataCollection({
+                    collection: new DhtRawDataCollection(),
+                    View: DhtRawDataView,
+                    $element: $('#raw-data-dht')
+                });
+
                 return this;
 
             },
 
-            renderTmp36: function () {
-                this.tmp36RawDataCollection.each(function(item) {
-                    var tmp36RawDataView = new Tmp36RawDataView({
+            initializeRawDataCollection: function (rawData) {
+                var that = this;
+
+                rawData.collection.on('sync', function() {
+                    that.renderRawDataView(rawData);
+                });
+                rawData.collection.fetch();
+            },
+
+            renderRawDataView: function (rawData) {
+                rawData.collection.each(function(item) {
+                    var view = new rawData.View({
                         model: item
                     });
-                    tmp36RawDataView.render();
-                    $('#raw-data-tmp36').append(tmp36RawDataView.el);
+                    view.render();
+                    rawData.$element.append(view.el);
                 });
             }
 

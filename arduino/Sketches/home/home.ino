@@ -117,7 +117,7 @@ void loop()
 
     sendDhtData();
 
-    delay(5000);
+    delay(60000);
 }
 
 

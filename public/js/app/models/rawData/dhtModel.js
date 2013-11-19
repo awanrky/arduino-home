@@ -1,4 +1,7 @@
 'use strict';
+/**
+ * Created by mark on 11/18/13.
+ */
 define([
     'jquery',
     'backbone',
