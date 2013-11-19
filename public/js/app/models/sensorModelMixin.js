@@ -1,10 +1,11 @@
-'use strict';
+
 /**
  * Created by mark on 11/18/13.
  */
 define([
     'moment'
 ], function(moment) {
+    'use strict';
     return {
 
         formattedDateTime: function (datetime) {
