@@ -21,7 +21,8 @@
   "dependencies": {
     "express": "3.x",
     "serialport": "~1.2.5",
-    "lodash": "*"
+    "lodash": "*",
+    "moment": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

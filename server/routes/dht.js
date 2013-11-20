@@ -5,6 +5,7 @@
 
 var schema = require('../schemas/dht');
 var RouteInformation = require('./routeinformation');
+//var moment = require('moment');
 
 var routeInformation = new RouteInformation('dht');
 
@@ -23,6 +24,24 @@ module.exports.dht = function(server) {
             if (error) { res.send(400, {error: error.message}); return; }
             res.send(documents);
         });
+    });
+
+    server.get(routeInformation.getPath('hourly'), function(req, res) {
+//        var startDate = moment().subtract('days', 1).toDate();
+        var o = {};
+        o.map = function () {
+            emit(this.datetime.getHours(), this.degreesCelcius);
+        };
+        o.reduce = function (key, vals) {
+            return Math.min.apply(Math, vals);
+        };
+//        o.out = 'map_reduce_test';
+        schema
+            .mapReduce(o, function(err, results) {
+                if (err) { res.send(500, err); return;  }
+                res.send(results);
+            } );
+
     });
 
     server.post(routeInformation.getPath(), function(req, res) {

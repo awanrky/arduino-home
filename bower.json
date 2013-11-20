@@ -29,6 +29,7 @@
     "text": "latest",
     "bootstrap": "latest",
     "font-awesome": "latest",
-    "moment": "latest"
+    "moment": "latest",
+    "d3": "latest"
   }
 }
