@@ -5,7 +5,8 @@
 
 var schema = require('../schemas/dht');
 var RouteInformation = require('./routeinformation');
-//var moment = require('moment');
+
+var moment = require('moment');
 
 var routeInformation = new RouteInformation('dht');
 
@@ -26,21 +27,47 @@ module.exports.dht = function(server) {
         });
     });
 
-    server.get(routeInformation.getPath('hourly'), function(req, res) {
-//        var startDate = moment().subtract('days', 1).toDate();
+    server.get(routeInformation.getPath('hourly/:hours'), function(req, res) {
+        var startDate = moment().subtract('hours', req.params.hours).toDate();
         var o = {};
         o.map = function () {
-            emit(this.datetime.getHours(), this.degreesCelcius);
+            var temp = {
+//                _id: this._id,
+                degreesCelcius: this.degreesCelcius,
+                humidity: this.humidity
+            };
+            emit(
+                this.datetime.toDateString() +
+                    ' ' +
+                    this.datetime.toTimeString().substr(0, 2) +
+                    ':00',
+                { min: temp, max: temp } );
         };
-        o.reduce = function (key, vals) {
-            return Math.min.apply(Math, vals);
+        o.reduce = function (key, values) {
+            var result = values[0];
+
+            for ( var i = 1; i < values.length; i++ ) {
+                if (values[i].min.degreesCelcius < result.min.degreesCelcius) {
+                    result.min.degreesCelcius = values[i].min.degreesCelcius;
+                }
+                if (values[i].max.degreesCelcius > result.max.degreesCelcius) {
+                    result.max.degreesCelcius = values[i].max.degreesCelcius;
+                }
+                if (values[i].min.humidity < result.min.humidity) {
+                    result.min.humidity = values[i].min.humidity;
+                }
+                if (values[i].max.humidity > result.max.humidity) {
+                    result.max.humidity = values[i].max.humidity;
+                }
+            }
+
+            return result;
         };
-//        o.out = 'map_reduce_test';
-        schema
-            .mapReduce(o, function(err, results) {
-                if (err) { res.send(500, err); return;  }
-                res.send(results);
-            } );
+        o.query = {datetime: {$gt: startDate}};
+        schema.mapReduce(o, function(err, results) {
+            if (err) { res.send(500, err); return;  }
+            res.send(results);
+        } );
 
     });
 

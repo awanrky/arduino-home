@@ -22,7 +22,7 @@
     "express": "3.x",
     "serialport": "~1.2.5",
     "lodash": "*",
-    "moment": "*"
+    "moment": "2.2.1"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

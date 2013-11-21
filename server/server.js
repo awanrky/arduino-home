@@ -49,7 +49,6 @@ server.configure(function() {
     server.use(server.router);
 
 });
-
 SerialPortRoute.serialport(server);
 TMP36.tmp36(server);
 DHT.dht(server);
