@@ -2,9 +2,10 @@ define(['jquery',
     'backbone',
     'underscore',
     'models/dashboardModel',
+    'views/dhtHourlyView',
     'text!templates/dashboard.html'],
 
-    function ($, Backbone, _, Model, template) {
+    function ($, Backbone, _, Model, DhtHourlyView, template) {
         'use strict';
 
         // Returns the View class
@@ -34,6 +35,9 @@ define(['jquery',
 
                 // Dynamically updates the UI with the view's template
                 this.$el.html(this.template);
+
+                this.dhtHourlyView = new DhtHourlyView();
+                this.dhtHourlyView.render();
 
                 // Maintains chainability
                 return this;

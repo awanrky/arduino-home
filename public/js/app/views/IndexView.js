@@ -1,8 +1,14 @@
 // IndexView.js
 
 require.config({
+    shim: {
+        d3: {
+            exports: 'd3'
+        }
+    },
     paths: {
-        'moment': 'libs/moment/min/moment.min'
+        'moment': 'libs/moment/min/moment.min',
+        'd3': 'libs/d3/d3'
     }
 });
 

@@ -20,7 +20,7 @@
     "trailing": true,
     "browser": true,
     "node": true,
-    "nomen": true,
-    "maxcomplexity": 2,
+    "nomen": false,
+    "maxcomplexity": 4,
     "maxlen": 100
 }
