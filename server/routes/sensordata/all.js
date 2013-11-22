@@ -18,19 +18,19 @@ module.exports.all = function(server) {
     server.get(routeInformation.getPath('count'), function(req, res) {
         var data = {};
 
-        tmp36Schema.count().exec().then(function(value) {
+        tmp36Schema.params().exec().then(function(value) {
             data.tmp36Count = value;
         })
-        .then(cd5Schema.count().exec().then(function(value) {
+        .then(cd5Schema.params().exec().then(function(value) {
             data.cd5Count = value;
         })
-        .then(dhtSchema.count().exec().then(function(value) {
+        .then(dhtSchema.params().exec().then(function(value) {
             data.dhtCount = value;
         })
-        .then(tsl2561Schema.count().exec().then(function(value) {
+        .then(tsl2561Schema.params().exec().then(function(value) {
             data.tsl2561Count = value;
         })
-        .then(invalidSchema.count().exec().then(function(value) {
+        .then(invalidSchema.params().exec().then(function(value) {
             data.invalidCount = value;
         })
         .then(function() {

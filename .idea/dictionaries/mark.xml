@@ -4,6 +4,7 @@
       <w>arduino</w>
       <w>baudrate</w>
       <w>chainability</w>
+      <w>daterange</w>
       <w>deps</w>
       <w>gruntfile</w>
       <w>hashchange</w>

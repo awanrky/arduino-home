@@ -37,7 +37,7 @@ define(['jquery',
                 this.$el.html(this.template);
 
                 this.dhtHourlyView = new DhtHourlyView();
-                this.dhtHourlyView.render();
+                this.dhtHourlyView.fetch();
 
                 // Maintains chainability
                 return this;

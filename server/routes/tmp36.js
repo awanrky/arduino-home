@@ -19,7 +19,7 @@ module.exports.tmp36 = function(server) {
     });
 
     server.get(routeInformation.getPath('last/:count'), function(req, res) {
-        schema.find().sort({datetime: -1}).limit(req.params.count).exec(function(error, documents) {
+        schema.find().sort({datetime: -1}).limit(req.params.params).exec(function(error, documents) {
             if (error) { res.send(400, {error: error.message}); return; }
             res.send(documents);
         });
