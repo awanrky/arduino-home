@@ -18,6 +18,22 @@ module.exports.tmp36 = function(server) {
         });
     });
 
+    server.get(routeInformation.getPath('daterange/:start'), getDaterange);
+    server.get(routeInformation.getPath('daterange/:start/:end'), getDaterange);
+
+    function getDaterange(req, res) {
+        var startDate = new Date(req.params.start);
+        var endDate = (!!req.params.end) ? new Date(req.params.end) : new Date();
+
+        schema
+            .find({datetime: {$gt: startDate}})
+            .find({datetime: {$lt: endDate}})
+            .exec(function(error, documents) {
+                if (error) { res.send(400, {error: error.message}); return; }
+                res.send(documents);
+            });
+    }
+
     server.get(routeInformation.getPath('last/:count'), function(req, res) {
         schema.find().sort({datetime: -1}).limit(req.params.params).exec(function(error, documents) {
             if (error) { res.send(400, {error: error.message}); return; }

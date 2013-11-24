@@ -2,10 +2,20 @@ define(['jquery',
     'backbone',
     'underscore',
     'models/dashboardModel',
-    'views/dhtHourlyView',
+    'views/DhtHumidityLineChartView',
+    'views/DhtTemperatureLineChartView',
+    'views/Tmp36LineChartView',
+    'views/Cd5LineChartView',
+    'views/Tsl2561MultiSeriesLineChartView',
     'text!templates/dashboard.html'],
 
-    function ($, Backbone, _, Model, DhtHourlyView, template) {
+    function ($, Backbone, _, Model,
+              DhtHumidityLineChartView,
+              DhtTemperatureLineChartView,
+              Tmp36LineChartView,
+              Cd5LineChartView,
+              Tsl2561MultiSeriesLineChartView,
+              template) {
         'use strict';
 
         // Returns the View class
@@ -22,6 +32,8 @@ define(['jquery',
 
             },
 
+            daterange: '2013-11-20',
+
             // View Event Handlers
             events: {
 
@@ -36,8 +48,29 @@ define(['jquery',
                 // Dynamically updates the UI with the view's template
                 this.$el.html(this.template);
 
-                this.dhtHourlyView = new DhtHourlyView();
-                this.dhtHourlyView.fetch();
+                this.tmp36LineChartView = new Tmp36LineChartView();
+                this.tmp36LineChartView.params = this.daterange;
+                this.tmp36LineChartView.fetch();
+
+                this.dhtTemperatureLineChartView = new DhtTemperatureLineChartView();
+                this.dhtTemperatureLineChartView.params = this.daterange;
+                this.dhtTemperatureLineChartView.fetch();
+
+                this.dhtHumidityLineChartView = new DhtHumidityLineChartView();
+                this.dhtHumidityLineChartView.params = this.daterange;
+                this.dhtHumidityLineChartView.fetch();
+
+                this.cd5LineChartView = new Cd5LineChartView();
+                this.cd5LineChartView.params = this.daterange;
+                this.cd5LineChartView.fetch();
+
+                this.tsl2561MultiSeriesLineChartView = new Tsl2561MultiSeriesLineChartView();
+                this.tsl2561MultiSeriesLineChartView.params = this.daterange;
+                this.tsl2561MultiSeriesLineChartView.fetch();
+
+//                this.dhtHourlyView = new DhtHourlyView();
+//                this.dhtHourlyView.params = this.daterange;
+//                this.dhtHourlyView.fetch();
 
                 // Maintains chainability
                 return this;

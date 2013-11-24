@@ -10,6 +10,8 @@ var Config = require('./config/config.js').config,
     SensorDataAll = require('./routes/sensordata/all'),
     TMP36 = require('./routes/tmp36'),
     DHT = require('./routes/dht'),
+    CD5 = require('./routes/cd5'),
+    TSL2561 = require('./routes/tsl2561'),
     SerialPort = require('./serialport/serialport');
 
 module.exports = server;
@@ -52,6 +54,8 @@ server.configure(function() {
 SerialPortRoute.serialport(server);
 TMP36.tmp36(server);
 DHT.dht(server);
+CD5.cd5(server);
+TSL2561.tsl2561(server);
 
 SensorDataAll.all(server);
 
