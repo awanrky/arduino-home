@@ -5,13 +5,35 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    './LineChartView',
+    './MultiSeriesLineChartView',
     '../models/sensorModelMixin'
 ],
-    function($, Backbone, _, LineChartView, sensorModelMixin){
+    function($, Backbone, _, MultiSeriesLineChartView, sensorModelMixin){
         'use strict';
 
-        return LineChartView.extend({
+        var seriesDataDefinition = [{
+            name: 'temperature',
+            mapValues: function(data) {
+                seriesDataDefinition[0].values = data.map(function(d) {
+                    return {
+                        date: new Date(d.datetime),
+                        value: +sensorModelMixin.degreesFahrenheit(d.degreesCelcius)
+                    };
+                });
+            }
+        }, {
+            name: 'humidity',
+            mapValues: function(data) {
+                seriesDataDefinition[1].values = data.map(function(d) {
+                    return {
+                        date: new Date(d.datetime),
+                        value: +d.humidity
+                    };
+                });
+            }
+        }];
+
+        return MultiSeriesLineChartView.extend({
 
             el: '#dht-hourly',
 
@@ -19,17 +41,20 @@ define([
 
             path: 'daterange',
 
-            params: '2013-11-19',
+            params: '2013-11-23',
 
             width: 1000,
 
             height: 250,
 
-            yLabel: 'Degrees Fahrenheit (DHT)',
+            yLabel: 'DHT',
 
-            getDataPoint: function(d) {
-                return sensorModelMixin.degreesFahrenheit(d.degreesCelcius);
-            }
+            series: seriesDataDefinition
+
+//            getDataPoint: function(d) {
+//                return sensorModelMixin.degreesFahrenheit(d.degreesCelcius);
+//            }
+
         });
     }
 );

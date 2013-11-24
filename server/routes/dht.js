@@ -34,7 +34,7 @@ module.exports.dht = function(server) {
                 if (error) { res.send(400, {error: error.message}); return; }
                 res.send(documents);
             });
-    };
+    }
 
     server.get(routeInformation.getPath('last/:count'), function(req, res) {
         schema.find().sort({datetime: -1}).limit(req.params.params).exec(function(error, documents) {
