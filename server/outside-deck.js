@@ -33,27 +33,27 @@ db.once('open', function callback () {
     console.log('Connected to ' + Config.database.name);
 });
 
-//server.configure(function() {
-//
-//    server.use(express['static'](__dirname + '/../public'));
-//
-//    server.use(express.errorHandler({
-//
-//        dumpExceptions: true,
-//
-//        showStack: true
-//
-//    }));
-//
-//    server.use(express.bodyParser());
-//
-//    server.use(express.cookieParser());
-//
-//    server.use(express.session({ secret: Config.sessionSecret }));
-//
-//    server.use(server.router);
-//
-//});
+server.configure(function() {
+
+    server.use(express['static'](__dirname + '/../public'));
+
+    server.use(express.errorHandler({
+
+        dumpExceptions: true,
+
+        showStack: true
+
+    }));
+
+    server.use(express.bodyParser());
+
+    server.use(express.cookieParser());
+
+    server.use(express.session({ secret: Config.sessionSecret }));
+
+    server.use(server.router);
+
+});
 //SerialPortRoute.serialport(server);
 //TMP36.tmp36(server);
 //DHT.dht(server);
@@ -66,4 +66,4 @@ serialPort.open();
 
 // Start Node.js Server
 http.createServer(server).listen(port);
-
+console.log('server started...');
