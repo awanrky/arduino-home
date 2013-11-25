@@ -57,7 +57,7 @@ define([
 
             height: 250,
 
-            yLabel: 'DHT',
+            yLabel: 'Tsl2561',
 
             series: seriesDataDefinition
 

@@ -32,7 +32,7 @@ define(['jquery',
 
             },
 
-            daterange: '2013-11-20',
+            daterange: '2013-11-24',
 
             // View Event Handlers
             events: {
@@ -67,10 +67,6 @@ define(['jquery',
                 this.tsl2561MultiSeriesLineChartView = new Tsl2561MultiSeriesLineChartView();
                 this.tsl2561MultiSeriesLineChartView.params = this.daterange;
                 this.tsl2561MultiSeriesLineChartView.fetch();
-
-//                this.dhtHourlyView = new DhtHourlyView();
-//                this.dhtHourlyView.params = this.daterange;
-//                this.dhtHourlyView.fetch();
 
                 // Maintains chainability
                 return this;
