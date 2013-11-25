@@ -4,7 +4,7 @@ define(['jquery',
     'models/dashboardModel',
     'views/DhtHumidityLineChartView',
     'views/DhtTemperatureLineChartView',
-    'views/Tmp36LineChartView',
+    'views/Tmp36MultiSeriesLineChartView',
     'views/Cd5LineChartView',
     'views/Tsl2561MultiSeriesLineChartView',
     'text!templates/dashboard.html'],
@@ -12,7 +12,7 @@ define(['jquery',
     function ($, Backbone, _, Model,
               DhtHumidityLineChartView,
               DhtTemperatureLineChartView,
-              Tmp36LineChartView,
+              Tmp36MultiSeriesLineChartView,
               Cd5LineChartView,
               Tsl2561MultiSeriesLineChartView,
               template) {
@@ -48,7 +48,7 @@ define(['jquery',
                 // Dynamically updates the UI with the view's template
                 this.$el.html(this.template);
 
-                this.tmp36LineChartView = new Tmp36LineChartView();
+                this.tmp36LineChartView = new Tmp36MultiSeriesLineChartView();
                 this.tmp36LineChartView.params = this.daterange;
                 this.tmp36LineChartView.fetch();
 

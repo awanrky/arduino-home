@@ -28,6 +28,7 @@ module.exports.tmp36 = function(server) {
         schema
             .find({datetime: {$gt: startDate}})
             .find({datetime: {$lt: endDate}})
+//            .find({sensorName: 'outside-deck'})
             .exec(function(error, documents) {
                 if (error) { res.send(400, {error: error.message}); return; }
                 res.send(documents);
