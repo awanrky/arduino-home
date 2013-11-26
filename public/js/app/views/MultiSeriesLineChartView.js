@@ -44,7 +44,9 @@ define([
 
             initialize: function () {
                 this.color = d3.scale.category10();
-                this.color.domain(['degreesCelcius', 'humidity']);
+
+                // skip the first color, I can't see the red/green difference
+                this.color.domain(['','degreesCelcius', 'humidity']);
             },
 
             fetch: function () {

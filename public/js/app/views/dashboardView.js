@@ -5,7 +5,7 @@ define(['jquery',
     'views/DhtHumidityLineChartView',
     'views/DhtTemperatureLineChartView',
     'views/Tmp36MultiSeriesLineChartView',
-    'views/Cd5LineChartView',
+    'views/Cd5MultiSeriesLineChartView',
     'views/Tsl2561MultiSeriesLineChartView',
     'text!templates/dashboard.html'],
 
@@ -13,7 +13,7 @@ define(['jquery',
               DhtHumidityLineChartView,
               DhtTemperatureLineChartView,
               Tmp36MultiSeriesLineChartView,
-              Cd5LineChartView,
+              Cd5MultiSeriesLineChartView,
               Tsl2561MultiSeriesLineChartView,
               template) {
         'use strict';
@@ -60,9 +60,9 @@ define(['jquery',
                 this.dhtHumidityLineChartView.params = this.daterange;
                 this.dhtHumidityLineChartView.fetch();
 
-                this.cd5LineChartView = new Cd5LineChartView();
-                this.cd5LineChartView.params = this.daterange;
-                this.cd5LineChartView.fetch();
+                this.cd5MultiSeriesLineChartView = new Cd5MultiSeriesLineChartView();
+                this.cd5MultiSeriesLineChartView.params = this.daterange;
+                this.cd5MultiSeriesLineChartView.fetch();
 
                 this.tsl2561MultiSeriesLineChartView = new Tsl2561MultiSeriesLineChartView();
                 this.tsl2561MultiSeriesLineChartView.params = this.daterange;

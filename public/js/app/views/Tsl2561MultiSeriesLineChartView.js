@@ -5,10 +5,9 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    './MultiSeriesLineChartView',
-    '../models/sensorModelMixin'
+    './MultiSeriesLineChartView'
 ],
-    function($, Backbone, _, MultiSeriesLineChartView, sensorModelMixin){
+    function($, Backbone, _, MultiSeriesLineChartView){
         'use strict';
 
         var seriesDataDefinition = [{
