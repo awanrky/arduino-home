@@ -1,29 +1,28 @@
 define(['jquery',
     'backbone',
     'underscore',
-    'models/rawdataModel',
-    'text!templates/rawdata.html', './sensorDataCountView',
-    './rawData/tmp36View',
-    '../collections/rawData/tmp36Collection',
-    './rawData/dhtView',
-    '../collections/rawData/dhtCollection'
-], function (
-        $,
-        Backbone,
-        _,
-        Model,
-        template,
-        SensorDataCountView,
-        Tmp36RawDataView,
-        Tmp36RawDataCollection,
-        DhtRawDataView,
-        DhtRawDataCollection
-        ) {
+    'models/dashboardModel',
+    'views/DhtHumidityLineChartView',
+    'views/DhtTemperatureLineChartView',
+    'views/Tmp36MultiSeriesLineChartView',
+    'views/Cd5MultiSeriesLineChartView',
+    'views/Tsl2561MultiSeriesLineChartView',
+    'text!templates/dashboard.html'],
+
+    function ($, Backbone, _, Model,
+              DhtHumidityLineChartView,
+              DhtTemperatureLineChartView,
+              Tmp36MultiSeriesLineChartView,
+              Cd5MultiSeriesLineChartView,
+              Tsl2561MultiSeriesLineChartView,
+              template) {
         'use strict';
 
         return Backbone.View.extend({
 
             el: '.magic',
+
+            daterange: '2013-11-25',
 
             initialize: function () {
                 this.render();
@@ -35,46 +34,35 @@ define(['jquery',
 
             render: function () {
 
+                // Setting the view's template property using the Underscore template method
                 this.template = _.template(template, {});
 
+                // Dynamically updates the UI with the view's template
                 this.$el.html(this.template);
 
-                this.sensorDataCountView = new SensorDataCountView();
-                this.$('.schema-count').append(this.sensorDataCountView.el);
+                this.tmp36LineChartView = new Tmp36MultiSeriesLineChartView();
+                this.tmp36LineChartView.params = this.daterange;
+                this.tmp36LineChartView.fetch();
 
-                this.initializeRawDataCollection({
-                    collection: new Tmp36RawDataCollection(),
-                    View: Tmp36RawDataView,
-                    $element: $('#raw-data-tmp36')
-                });
+                this.dhtTemperatureLineChartView = new DhtTemperatureLineChartView();
+                this.dhtTemperatureLineChartView.params = this.daterange;
+                this.dhtTemperatureLineChartView.fetch();
 
-                this.initializeRawDataCollection({
-                    collection: new DhtRawDataCollection(),
-                    View: DhtRawDataView,
-                    $element: $('#raw-data-dht')
-                });
+                this.dhtHumidityLineChartView = new DhtHumidityLineChartView();
+                this.dhtHumidityLineChartView.params = this.daterange;
+                this.dhtHumidityLineChartView.fetch();
 
+                this.cd5MultiSeriesLineChartView = new Cd5MultiSeriesLineChartView();
+                this.cd5MultiSeriesLineChartView.params = this.daterange;
+                this.cd5MultiSeriesLineChartView.fetch();
+
+                this.tsl2561MultiSeriesLineChartView = new Tsl2561MultiSeriesLineChartView();
+                this.tsl2561MultiSeriesLineChartView.params = this.daterange;
+                this.tsl2561MultiSeriesLineChartView.fetch();
+
+                // Maintains chainability
                 return this;
 
-            },
-
-            initializeRawDataCollection: function (rawData) {
-                var that = this;
-
-                rawData.collection.on('sync', function() {
-                    that.renderRawDataView(rawData);
-                });
-                rawData.collection.fetch();
-            },
-
-            renderRawDataView: function (rawData) {
-                rawData.collection.each(function(item) {
-                    var view = new rawData.View({
-                        model: item
-                    });
-                    view.render();
-                    rawData.$element.append(view.el);
-                });
             }
 
         });
