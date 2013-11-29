@@ -28,6 +28,13 @@ define(['jquery',
             return start.format() + '/' + end.format();
         }
 
+        function formatDateRangePicker(start, end) {
+            if (!start) { return ' -- '; }
+            var returnValue =  start.format('MMMM D, YYYY HH:mm');
+            if (!end) { return returnValue + ' - Now'; }
+            return returnValue + ' - ' + end.format('MMMM D, YYYY HH:mm');
+        }
+
         return Backbone.View.extend({
 
             el: '.magic',
@@ -43,6 +50,8 @@ define(['jquery',
             update: function (start, end) {
 
                 var params = formatParams(start, end);
+
+                $('#daterangepicker span').html(formatDateRangePicker(start, end));
 
                 this.tmp36LineChartView.params = params;
                 this.tmp36LineChartView.fetch();
@@ -114,14 +123,10 @@ define(['jquery',
                         this.start = start;
                         this.end = end;
 
-                        $('#daterangepicker span').html(start.format('MMMM D, YYYY') +
-                            ' - ' +
-                            end.format('MMMM D, YYYY'));
-
                         that.update(start, end);
                     });
 
-                this.update();
+                this.update(moment().startOf('day'));
 
                 // Maintains chainability
                 return this;
