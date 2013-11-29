@@ -30,6 +30,7 @@
     "bootstrap": "latest",
     "font-awesome": "latest",
     "moment": "latest",
-    "d3": "latest"
+    "d3": "latest",
+    "bootstrap-daterangepicker": "latest"
   }
 }

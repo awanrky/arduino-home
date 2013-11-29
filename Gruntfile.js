@@ -74,6 +74,10 @@ module.exports = function (grunt) {
                 command: 'cp ' +
                 './public/js/libs/bootstrap/dist/css/bootstrap.css ./public/css/bootstrap.css'
             },
+            copyBootstrapDateRangePickerCSS: {
+                command: 'cp ' +
+                './public/js/libs/bootstrap-daterangepicker/daterangepicker-bs3.css ./public/css/bootstrap-daterangepicker.css'
+            },
             copyFontAwesomeCSS: {
                 command: 'cp ./public/js/libs/font-awesome/css/font-awesome.css ' +
                 './public/css/font-awesome.css && cp ' +
@@ -81,13 +85,16 @@ module.exports = function (grunt) {
                 './public/css/font-awesome-ie7.css'
             },
             copyFontAwesomeFonts: {
-                command: 'cp -r ./public/js/libs/font-awesome/font/* ./public/font'
+                command: 'cp ./public/js/libs/font-awesome/fonts/* ./public/fonts'
+            },
+            copyGlyphiconsFonts: {
+                command: 'cp ./public/js/libs/bootstrap/fonts/* ./public/fonts'
             }
         },
         less: {
             production: {
                 options: {
-                    paths: ["public/css"]
+                    paths: ['public/css']
                 },
                 files: {
                     'public/css/includes/css/custom.css': 'public/css/includes/less/custom.less'
@@ -106,6 +113,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['jshint', 'mochaTest' ]);
     grunt.registerTask('init', [
         'shell:copyBootstrapCSS',
+        'shell:copyBootstrapDateRangePickerCSS',
         'shell:copyFontAwesomeCSS',
         'shell:copyFontAwesomeFonts',
         'less:production',

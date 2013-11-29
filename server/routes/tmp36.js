@@ -29,6 +29,7 @@ module.exports.tmp36 = function(server) {
             .find({datetime: {$gt: startDate}})
             .find({datetime: {$lt: endDate}})
 //            .find({sensorName: 'outside-deck'})
+            .select('sensorName datetime degreesCelcius')
             .exec(function(error, documents) {
                 if (error) { res.send(400, {error: error.message}); return; }
                 res.send(documents);

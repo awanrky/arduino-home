@@ -5,7 +5,7 @@
 
 var schema = require('../schemas/dht');
 var RouteInformation = require('./routeinformation');
-var _ = require('lodash');
+//var _ = require('lodash');
 
 var moment = require('moment');
 
@@ -30,6 +30,7 @@ module.exports.dht = function(server) {
         schema
             .find({datetime: {$gt: startDate}})
             .find({datetime: {$lt: endDate}})
+            .select('sensorName datetime degreesCelcius humidity')
             .exec(function(error, documents) {
                 if (error) { res.send(400, {error: error.message}); return; }
                 res.send(documents);

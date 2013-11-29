@@ -1,15 +1,19 @@
 define(['jquery',
     'backbone',
     'underscore',
+    'moment',
     'models/dashboardModel',
     'views/DhtHumidityLineChartView',
     'views/DhtTemperatureLineChartView',
     'views/Tmp36MultiSeriesLineChartView',
     'views/Cd5MultiSeriesLineChartView',
     'views/Tsl2561MultiSeriesLineChartView',
-    'text!templates/dashboard.html'],
+    'text!templates/rawdata.html',
+    'bootstrap-daterangepicker'],
 
-    function ($, Backbone, _, Model,
+    function ($, Backbone, _,
+              moment,
+              Model,
               DhtHumidityLineChartView,
               DhtTemperatureLineChartView,
               Tmp36MultiSeriesLineChartView,
@@ -18,11 +22,15 @@ define(['jquery',
               template) {
         'use strict';
 
+        function formatParams(start, end) {
+            if (!start) { start = moment().startOf('day'); }
+            if (!end) { return start.format(); }
+            return start.format() + '/' + end.format();
+        }
+
         return Backbone.View.extend({
 
             el: '.magic',
-
-            daterange: '2013-11-25',
 
             initialize: function () {
                 this.render();
@@ -32,7 +40,29 @@ define(['jquery',
 
             },
 
+            update: function (start, end) {
+
+                var params = formatParams(start, end);
+
+                this.tmp36LineChartView.params = params;
+                this.tmp36LineChartView.fetch();
+
+                this.dhtTemperatureLineChartView.params = params;
+                this.dhtTemperatureLineChartView.fetch();
+
+                this.dhtHumidityLineChartView.params = params;
+                this.dhtHumidityLineChartView.fetch();
+
+                this.cd5MultiSeriesLineChartView.params = params;
+                this.cd5MultiSeriesLineChartView.fetch();
+
+                this.tsl2561MultiSeriesLineChartView.params = params;
+                this.tsl2561MultiSeriesLineChartView.fetch();
+
+            },
+
             render: function () {
+                var that = this;
 
                 // Setting the view's template property using the Underscore template method
                 this.template = _.template(template, {});
@@ -41,24 +71,57 @@ define(['jquery',
                 this.$el.html(this.template);
 
                 this.tmp36LineChartView = new Tmp36MultiSeriesLineChartView();
-                this.tmp36LineChartView.params = this.daterange;
-                this.tmp36LineChartView.fetch();
 
                 this.dhtTemperatureLineChartView = new DhtTemperatureLineChartView();
-                this.dhtTemperatureLineChartView.params = this.daterange;
-                this.dhtTemperatureLineChartView.fetch();
 
                 this.dhtHumidityLineChartView = new DhtHumidityLineChartView();
-                this.dhtHumidityLineChartView.params = this.daterange;
-                this.dhtHumidityLineChartView.fetch();
 
                 this.cd5MultiSeriesLineChartView = new Cd5MultiSeriesLineChartView();
-                this.cd5MultiSeriesLineChartView.params = this.daterange;
-                this.cd5MultiSeriesLineChartView.fetch();
 
                 this.tsl2561MultiSeriesLineChartView = new Tsl2561MultiSeriesLineChartView();
-                this.tsl2561MultiSeriesLineChartView.params = this.daterange;
-                this.tsl2561MultiSeriesLineChartView.fetch();
+
+                $('#daterangepicker').daterangepicker({
+                        ranges: {
+                            'Today': [moment().startOf('day'), moment().endOf('day')],
+                            'Yesterday': [
+                                moment().startOf('day').subtract('days', 1),
+                                moment().endOf('day').subtract('days', 1)
+                            ],
+                            'Last 7 Days': [
+                                moment().startOf('day').subtract('days', 6),
+                                moment().endOf('day')
+                            ],
+                            'Last 30 Days': [
+                                moment().startOf('day').subtract('days', 29),
+                                moment().endOf('day')
+                            ],
+                            'This Month': [
+                                moment().startOf('month'),
+                                moment().endOf('month')
+                            ],
+                            'Last Month': [
+                                moment().subtract('month', 1).startOf('month'),
+                                moment().subtract('month', 1).endOf('month')
+                            ]
+                        },
+                        startDate: moment().subtract('days', 29),
+                        endDate: moment(),
+                        timePicker: true,
+                        timePickerIncrement: 30,
+                        format: 'MM/DD/YYYY h:mm A'
+                    },
+                    function(start, end) {
+                        this.start = start;
+                        this.end = end;
+
+                        $('#daterangepicker span').html(start.format('MMMM D, YYYY') +
+                            ' - ' +
+                            end.format('MMMM D, YYYY'));
+
+                        that.update(start, end);
+                    });
+
+                this.update();
 
                 // Maintains chainability
                 return this;

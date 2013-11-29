@@ -21,12 +21,18 @@ require.config({
 
         'bootstrap': 'libs/bootstrap/dist/js/bootstrap',
 
+        'd3': 'libs/d3/d3',
+
+        'moment': 'libs/moment/min/moment.min',
+
         // Plugins
         // =======
 
         'backbone.validateAll': 'libs/plugins/Backbone.validateAll',
 
         'text': 'libs/text/text',
+
+        'bootstrap-daterangepicker': 'libs/bootstrap-daterangepicker/daterangepicker',
 
         // Application Folders
         // ===================
@@ -44,6 +50,7 @@ require.config({
         'events': 'app/events'
 
     },
+
 
     // Sets the configuration for your third party scripts that are not AMD compatible
     shim: {
@@ -63,7 +70,15 @@ require.config({
         },
 
         // Backbone.validateAll plugin that depends on Backbone
-        'backbone.validateAll': ['backbone']
+        'backbone.validateAll': ['backbone'],
+
+        'bootstrap-daterangepicker': {
+            'deps': ['bootstrap', 'moment', 'jquery' ]
+        },
+
+        d3: {
+            exports: 'd3'
+        }
 
     }
 

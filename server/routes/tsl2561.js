@@ -4,9 +4,9 @@
  */
 var schema = require('../schemas/tsl2561');
 var RouteInformation = require('./routeinformation');
-var _ = require('lodash');
+//var _ = require('lodash');
 
-var moment = require('moment');
+//var moment = require('moment');
 
 var routeInformation = new RouteInformation('tsl2561');
 
@@ -29,6 +29,7 @@ module.exports.tsl2561 = function(server) {
         schema
             .find({datetime: {$gt: startDate}})
             .find({datetime: {$lt: endDate}})
+            .select('sensorName datetime infrared broadband lux')
             .exec(function(error, documents) {
                 if (error) { res.send(400, {error: error.message}); return; }
                 res.send(documents);

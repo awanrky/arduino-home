@@ -5,9 +5,14 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'd3'
+    'd3',
+    'text!templates/linechart.html'
 ],
-    function($, Backbone, _, d3){
+    function($,
+             Backbone,
+             _,
+             d3,
+            template){
         'use strict';
 
         return Backbone.View.extend({
@@ -66,6 +71,10 @@ define([
             },
 
             render: function () {
+                var that = this;
+
+                this.template = _.template(template, {});
+                this.$el.html(this.template);
 
                 var width = this.width - this.margin.left - this.margin.right;
                 var height = this.height - this.margin.top - this.margin.bottom;
@@ -88,7 +97,7 @@ define([
                     .x(function(d) { return x(d.date); })
                     .y(function(d) { return y(d.value); });
 
-                var svg = d3.select(this.el).append('svg')
+                var svg = d3.select('#' + that.el.id + ' div').append('svg')
                     .attr('width', this.width)
                     .attr('height', this.height)
                     .append('g')
