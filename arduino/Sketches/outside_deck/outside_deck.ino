@@ -1,7 +1,10 @@
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
+#include <Adafruit_TSL2561.h>
+#include <aisa_TSL2561.h>
 #include <aisa_Cd5PhotoCell.h>
 #include <aisa_TMP36.h>
+#include <aisa_DHT.h>
 
 const String dataSeparator = ",";
 const String dataTypeTerminator = ":";
@@ -10,13 +13,17 @@ const String arduinoName = "outside-deck";
 
 aisa_TMP36 * tmp36;
 aisa_Cd5PhotoCell * cd5PhotoCell;
+aisa_TSL2561 * tsl2561;
+aisa_DHT * dht;
 
 void setup()
 {
     Serial.begin(57600);
 
-    cd5PhotoCell = new aisa_Cd5PhotoCell(arduinoName, 4);
-    tmp36 = new aisa_TMP36(arduinoName, 5, 5.0, 100);
+    cd5PhotoCell = new aisa_Cd5PhotoCell(arduinoName, 0);
+    tmp36 = new aisa_TMP36(arduinoName, 1, 5.0, 100);
+    tsl2561 = new aisa_TSL2561(arduinoName);    
+    dht = new aisa_DHT(arduinoName, 5, DHT22);
 }
 
 void sendDataSeparator() 
@@ -72,6 +79,26 @@ void sendTmp36Data()
     sendDataEnd(tmp36->getCelcius(false));
 }
 
+void sendTsl2561Data()
+{
+    sendDataType("TSL2561");
+    sendSensorName(tsl2561->getSensorName());
+    sendSensorPinName(tsl2561->getPinName());
+    sendData(tsl2561->getSensorId());
+    sendData(tsl2561->getLux());
+    sendData(tsl2561->getBroadband());
+    sendDataEnd(tsl2561->getInfrared(false));
+}
+
+void sendDhtData()
+{
+    sendDataType("DHT");
+    sendSensorName(dht->getSensorName());
+    sendSensorPinName(dht->getPinName());
+    sendData(dht->getTemperature());
+    sendDataEnd(dht->getHumidity());
+}
+
 void sendCd5PhotoCellData()
 {
     sendDataType("Cd5");
@@ -86,5 +113,14 @@ void loop()
 
     sendCd5PhotoCellData();
 
-    delay(5000);
+    sendTsl2561Data();
+
+    sendDhtData();
+
+    delay(60000);
 }
+
+
+
+
+
