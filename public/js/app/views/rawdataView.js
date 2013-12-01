@@ -2,6 +2,7 @@ define(['jquery',
     'backbone',
     'underscore',
     'moment',
+    'events/Notifier',
     'models/dashboardModel',
     'views/DhtHumidityLineChartView',
     'views/DhtTemperatureLineChartView',
@@ -13,6 +14,7 @@ define(['jquery',
 
     function ($, Backbone, _,
               moment,
+              notifier,
               Model,
               DhtHumidityLineChartView,
               DhtTemperatureLineChartView,
@@ -21,12 +23,6 @@ define(['jquery',
               Tsl2561MultiSeriesLineChartView,
               template) {
         'use strict';
-
-        function formatParams(start, end) {
-            if (!start) { start = moment().startOf('day'); }
-            if (!end) { return start.format(); }
-            return start.format() + '/' + end.format();
-        }
 
         function formatDateRangePicker(start, end) {
             if (!start) { return ' -- '; }
@@ -40,6 +36,7 @@ define(['jquery',
             el: '.magic',
 
             initialize: function () {
+                notifier.on('onSecond', function() { console.log('onSecond event fired.'); });
                 this.render();
             },
 
@@ -49,24 +46,17 @@ define(['jquery',
 
             update: function (start, end) {
 
-                var params = formatParams(start, end);
-
                 $('#daterangepicker span').html(formatDateRangePicker(start, end));
 
-                this.tmp36LineChartView.params = params;
-                this.tmp36LineChartView.fetch();
+                this.tmp36MultiSeriesLineChartView.setDateRange(start, end);
 
-                this.dhtTemperatureLineChartView.params = params;
-                this.dhtTemperatureLineChartView.fetch();
+                this.dhtTemperatureLineChartView.setDateRange(start, end);
 
-                this.dhtHumidityLineChartView.params = params;
-                this.dhtHumidityLineChartView.fetch();
+                this.dhtHumidityLineChartView.setDateRange(start, end);
 
-                this.cd5MultiSeriesLineChartView.params = params;
-                this.cd5MultiSeriesLineChartView.fetch();
+                this.cd5MultiSeriesLineChartView.setDateRange(start, end);
 
-                this.tsl2561MultiSeriesLineChartView.params = params;
-                this.tsl2561MultiSeriesLineChartView.fetch();
+                this.tsl2561MultiSeriesLineChartView.setDateRange(start, end);
 
             },
 
@@ -79,7 +69,7 @@ define(['jquery',
                 // Dynamically updates the UI with the view's template
                 this.$el.html(this.template);
 
-                this.tmp36LineChartView = new Tmp36MultiSeriesLineChartView();
+                this.tmp36MultiSeriesLineChartView = new Tmp36MultiSeriesLineChartView();
 
                 this.dhtTemperatureLineChartView = new DhtTemperatureLineChartView();
 
@@ -91,10 +81,13 @@ define(['jquery',
 
                 $('#daterangepicker').daterangepicker({
                         ranges: {
-                            'Today': [moment().startOf('day'), moment().endOf('day')],
-                            'Yesterday': [
-                                moment().startOf('day').subtract('days', 1),
-                                moment().endOf('day').subtract('days', 1)
+                            'Today': [moment().startOf('day')],
+                            'Yesterday and Today': [
+                                moment().startOf('day').subtract('days', 1)
+                            ],
+                            'Last 3 Days': [
+                                moment().startOf('day').subtract('days', 2),
+                                moment().endOf('day')
                             ],
                             'Last 7 Days': [
                                 moment().startOf('day').subtract('days', 6),

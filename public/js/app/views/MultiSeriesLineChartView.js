@@ -6,46 +6,24 @@ define([
     'backbone',
     'underscore',
     'd3',
+    'moment',
+    'events/Notifier',
+    'views/LineChartView',
     'text!templates/multiserieslinechart.html'
 ],
     function($,
              Backbone,
              _,
              d3,
-            template){
+             moment,
+             notifier,
+             LineChartView,
+             template){
         'use strict';
 
-        return Backbone.View.extend({
-
-            el: 'body',
-
-            url: '',
-
-            path: 'last',
-
-            params: 'all',
-
-            margin: {top: 20, right: 20, bottom: 20, left: 50},
-
-            width: 500,
-
-            height: 250,
+        return LineChartView.extend({
 
             series: [],
-
-            getDataPoint: function(d) {
-                return d.value;
-            },
-
-            yLabel: 'y-value',
-
-            route: function() {
-                return [
-                    this.url,
-                    this.path,
-                    this.params
-                ].join('/');
-            },
 
             initialize: function () {
                 this.color = d3.scale.category10();

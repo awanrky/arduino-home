@@ -6,14 +6,24 @@ define([
     'backbone',
     'underscore',
     'd3',
+    'moment',
+    'events/Notifier',
     'text!templates/linechart.html'
 ],
     function($,
              Backbone,
              _,
              d3,
-            template){
+             moment,
+             notifier,
+             template){
         'use strict';
+
+        function formatParams(start, end) {
+            if (!start) { start = moment().startOf('day'); }
+            if (!end) { return start.format(); }
+            return start.format() + '/' + end.format();
+        }
 
         return Backbone.View.extend({
 
@@ -47,6 +57,19 @@ define([
 
             initialize: function () {
 
+            },
+
+            setDateRange: function(start, end) {
+                this.start = start;
+                this.end = end;
+                this.params = formatParams(start, end);
+                this.fetch();
+            },
+
+            refresh: function() {
+                if (!this.start) { return; }
+                if (!!this.end && (this.end < moment())) { return; }
+                this.fetch();
             },
 
             fetch: function () {

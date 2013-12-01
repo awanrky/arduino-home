@@ -1,11 +1,24 @@
-define(['jquery', 'backbone'],
+define([
+    'jquery',
+    'backbone',
+    'underscore'
+],
 
-    function ($, Backbone) {
+    function (
+        $,
+        Backbone,
+        _
+        ) {
         'use strict';
 
-        var Notifier = _.extend({}, Backbone.Events);
+        var Notifier = _.extend({
+
+        }, Backbone.Events);
+
+        Notifier.onSecondInterval = setInterval(function() {
+            Notifier.trigger('onSecond');
+        }, 1000);
 
         return Notifier;
-
     }
 );
