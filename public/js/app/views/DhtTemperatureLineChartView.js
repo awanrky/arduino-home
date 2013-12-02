@@ -5,13 +5,39 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    './LineChartView',
+    './MultiSeriesLineChartView',
     '../models/sensorModelMixin'
 ],
-    function($, Backbone, _, LineChartView, sensorModelMixin){
+    function($, Backbone, _, MultiSeriesLineChartView, sensorModelMixin){
         'use strict';
 
-        return LineChartView.extend({
+        var seriesDataDefinition = [{
+            name: 'living-room',
+            mapValues: function(data) {
+                seriesDataDefinition[0].values = _.filter(data, function(d) {
+                    return d.sensorName === 'living-room';
+                }).map(function(d) {
+                        return {
+                            date: new Date(d.datetime),
+                            value: +sensorModelMixin.degreesFahrenheit(d.degreesCelcius)
+                        };
+                    });
+            }
+        }, {
+            name: 'outside-deck',
+            mapValues: function(data) {
+                seriesDataDefinition[1].values = _.filter(data, function(d) {
+                    return d.sensorName === 'outside-deck';
+                }).map(function(d) {
+                        return {
+                            date: new Date(d.datetime),
+                            value: +sensorModelMixin.degreesFahrenheit(d.degreesCelcius)
+                        };
+                    });
+            }
+        }];
+
+        return MultiSeriesLineChartView.extend({
 
             el: '#dht-temperature-line-chart',
 
@@ -27,9 +53,7 @@ define([
 
             yLabel: 'DHT Temperature',
 
-            getDataPoint: function(d) {
-                return sensorModelMixin.degreesFahrenheit(d.degreesCelcius);
-            }
+            series: seriesDataDefinition
 
         });
     }

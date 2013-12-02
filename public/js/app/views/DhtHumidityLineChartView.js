@@ -5,13 +5,38 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    './LineChartView',
-    '../models/sensorModelMixin'
+    './MultiSeriesLineChartView'
 ],
-    function($, Backbone, _, LineChartView, sensorModelMixin){
+    function($, Backbone, _, MultiSeriesLineChartView){
         'use strict';
 
-        return LineChartView.extend({
+        var seriesDataDefinition = [{
+            name: 'living-room',
+            mapValues: function(data) {
+                seriesDataDefinition[0].values = _.filter(data, function(d) {
+                    return d.sensorName === 'living-room';
+                }).map(function(d) {
+                        return {
+                            date: new Date(d.datetime),
+                            value: +d.humidity
+                        };
+                    });
+            }
+        }, {
+            name: 'outside-deck',
+            mapValues: function(data) {
+                seriesDataDefinition[1].values = _.filter(data, function(d) {
+                    return d.sensorName === 'outside-deck';
+                }).map(function(d) {
+                        return {
+                            date: new Date(d.datetime),
+                            value: +d.humidity
+                        };
+                    });
+            }
+        }];
+
+        return MultiSeriesLineChartView.extend({
 
             el: '#dht-humidity-line-chart',
 
@@ -27,9 +52,7 @@ define([
 
             yLabel: 'DHT Humidity',
 
-            getDataPoint: function(d) {
-                return d.humidity;
-            }
+            series: seriesDataDefinition
 
         });
     }
