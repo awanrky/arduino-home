@@ -9,6 +9,7 @@ var cd5 = require('./cd5');
 var tsl2561 = require('./tsl2561');
 var dht = require('./dht');
 var tmp36 = require('./tmp36');
+var bmp180 = require('./bmp180');
 var invalid = require('./invalid');
 
 
@@ -16,7 +17,8 @@ var dataType = {
     tmp36: 'TMP36',
     cd5: 'Cd5',
     dht: 'DHT',
-    tsl2561: 'TSL2561'
+    tsl2561: 'TSL2561',
+    bmp180: 'BMP180'
 };
 
 var types = {
@@ -45,6 +47,8 @@ var types = {
                 return dht.save(preparedData, dataArray);
             case dataType.tsl2561:
                 return tsl2561.save(preparedData, dataArray);
+            case dataType.bmp180:
+                return bmp180.save(preparedData, dataArray);
             default:
                 return invalid.save(preparedData, dataArray);
         }
