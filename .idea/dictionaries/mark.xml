@@ -8,9 +8,11 @@
       <w>daterangepicker</w>
       <w>daterangepickerinput</w>
       <w>deps</w>
+      <w>dtostrf</w>
       <w>glyphicons</w>
       <w>gruntfile</w>
       <w>hashchange</w>
+      <w>hecto</w>
       <w>jshint</w>
       <w>linechart</w>
       <w>linechartview</w>
@@ -27,7 +29,9 @@
       <w>routeinformation</w>
       <w>sensordata</w>
       <w>serialport</w>
+      <w>sprintf</w>
       <w>uglify</w>
+      <w>urlencoded</w>
       <w>viewport</w>
     </words>
   </dictionary>
