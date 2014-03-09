@@ -10,7 +10,7 @@
 
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF6, 0x8E};
 
-IPAddress server(192,168,13,14);
+IPAddress server(192,168,1,253);
 int serverPort = 1337;
 
 aisa_ethernet * ethernet;
