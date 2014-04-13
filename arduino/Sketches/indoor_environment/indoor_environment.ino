@@ -146,7 +146,8 @@ void takeBmp180Reading()
     dtostrf(altitudeInMeters, 1, 2, altitudeInMetersBuffer);
 
     sprintf(parameters,
-        "{\"sensorName\": \"outside-deck\", \"degreesCelcius\": %s, \"hectoPascals\": %s, \"altitudeInMeters\": %s}",
+        "{\"sensorName\": \"%s\", \"degreesCelcius\": %s, \"hectoPascals\": %s, \"altitudeInMeters\": %s}",
+        arduinoName,
         degreesCelciusBuffer,
         hectoPascalsBuffer,
         altitudeInMetersBuffer);
