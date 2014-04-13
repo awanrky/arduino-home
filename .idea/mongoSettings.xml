@@ -7,6 +7,11 @@
           <option name="serverName" value="localhost" />
           <option name="serverPort" value="27017" />
         </ServerConfiguration>
+        <ServerConfiguration>
+          <option name="label" value="gadfly" />
+          <option name="serverName" value="gadfly" />
+          <option name="serverPort" value="27017" />
+        </ServerConfiguration>
       </list>
     </option>
     <option name="shellPath" value="/usr/bin/mongo" />

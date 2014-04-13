@@ -14,12 +14,11 @@
 #include "utility/debug.h"
 #include "config.h"
 
-//const String dataSeparator = ",";
-//const String dataTypeTerminator = ":";
-
 const String arduinoName = "outside-deck";
 
 const int LOOP_DELAY = 1000;
+
+uint32_t apiServerIpAddress;
 
 Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ, ADAFRUIT_CC3000_VBAT, SPI_CLOCK_DIVIDER);
 
@@ -32,12 +31,14 @@ void setup()
 {
     Serial.begin(115200);
 
-      Serial.println(F("\nInitializing wifi..."));
-      if (!cc3000.begin())
-      {
+    getIpAddress(&apiServerIpAddress);
+
+    Serial.println(F("\nInitializing wifi..."));
+    if (!cc3000.begin())
+    {
         Serial.println(F("Couldn't initialize wifi! Check your wiring?"));
         while(1);
-      }
+    }
 
 //    cd5PhotoCell = new aisa_Cd5PhotoCell(arduinoName, 0);
 //    tmp36 = new aisa_TMP36(arduinoName, 1, 5.0, 100);
@@ -97,7 +98,15 @@ void loop()
 
         sendDhtData();
 
-        testConnect();
+//        testConnect();
+        if (testPost())
+        {
+            Serial.println(F("Successful post"));
+        }
+        else
+        {
+            Serial.println(F("Post error"));
+        }
 
         disconnectFromAp();
 
@@ -148,39 +157,70 @@ void getIpAddress(uint32_t *ip)
 	*ip += REST_API_SERVER_OCTET_4;
 }
 
-bool testConnect()
+bool testPost()
 {
-    uint32_t ip;
-   getIpAddress(&ip);
-   Adafruit_CC3000_Client www = cc3000.connectTCP(ip, REST_API_SERVER_PORT);
-   if (www.connected()) {
-     www.fastrprint(F("GET "));
-     www.fastrprint("/");
-     www.fastrprint(F(" HTTP/1.1\r\n"));
-     www.fastrprint(F("Host: ")); www.fastrprint("gadfly"); www.fastrprint(F("\r\n"));
-     www.fastrprint(F("\r\n"));
-     www.println();
-   } else {
-     Serial.println(F("Connection failed"));
-     return false;
-   }
+    char c;
+    String readBuffer = "";
+    unsigned long lastRead;
+    unsigned long idleTimeoutMilliseconds = 10000;
+    bool returnValue = false;
+    char parameters[] = "{\"sensorName\": \"outside-deck\", \"data\": \"this is the test data\"}";
 
-   Serial.println(F("-------------------------------------"));
+    Adafruit_CC3000_Client www = cc3000.connectTCP(apiServerIpAddress, REST_API_SERVER_PORT);
+    if (!www.connected())
+    {
+        return returnValue;
+    }
 
-   /* Read data until either the connection is closed, or the idle timeout is reached. */
-   unsigned long lastRead = millis();
-   while (www.connected() && (millis() - lastRead < IDLE_TIMEOUT_MS)) {
-     while (www.available()) {
-       char c = www.read();
-//       Serial.print(c);
-       lastRead = millis();
-     }
-   }
-   www.close();
-   Serial.println(F("-------------------------------------"));
-   return true;
+    String statusCode = "";
+
+    Serial.println(F("Connected"));
+
+    www.fastrprint(F("POST "));
+    www.fastrprint(F("/api/v1/arduino-home/test"));
+    www.fastrprint(F(" HTTP/1.1\r\n"));
+
+    www.fastrprint(F("Host: blah\r\n"));
+
+    www.fastrprint(USER_AGENT);
+
+    www.fastrprint(F("Content-Type: application/x-www-form-urlencoded\r\n"));
+
+    www.fastrprint(F("Content-Length: "));
+    www.print(strlen(parameters));
+    www.fastrprint(F("\r\n\r\n"));
+
+    www.fastrprint(parameters);
+
+    www.fastrprint(F("\r\n\r\n"));
+//    www.println();
+
+    Serial.println(F("Posted"));
+
+    lastRead = millis();
+    while (www.connected() && (millis() - lastRead < idleTimeoutMilliseconds))
+    {
+        while (www.available() && (millis() - lastRead < idleTimeoutMilliseconds))
+        {
+            c = www.read();
+            lastRead = millis();
+            readBuffer = readBuffer + c;
+            Serial.print(c);
+
+            if (c == '\r' || c == '\n')
+            {
+                if (readBuffer.substring(9, 12) == "201")
+                {
+                    returnValue = true;
+                };
+                lastRead = (millis() + idleTimeoutMilliseconds + 2);
+            }
+        }
+    }
+
+    www.close();
+    return returnValue;
 }
-
 
 /**************************************************************************/
 /*!
